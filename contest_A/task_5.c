@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <inttypes.h>
-#include <stdlib.h>
 #define MASK 0x80000000
 
 // На вход программе подается беззнаковое 32-битное целое число N.
