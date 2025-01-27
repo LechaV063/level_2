@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdint.h>
 #define BASE 3
-#define MAX_POWER 19
+#define MAX_POWER 20
+#define MAX_POSSIBLE_WEIGHT 1000000
 
 // В стартер боксе Geek Brains есть электронные чашечные весы (вместимость каждой чашки 1 тонна)
 // и гири массами 1г, 3г, 9г, 27г, и т.д. по одной штуке каждой массы.
@@ -13,7 +14,6 @@
 
 typedef struct item
 {
-    int used;
     int32_t weigth;
     uint32_t summBefore;
 } item;
@@ -31,45 +31,50 @@ int power(int base, int count)
 
 int main(int argc, char **argv)
 {
-    uint32_t weight;
+    int32_t weight;
     int count = 0;
     scanf("%u", &weight);
     item set[MAX_POWER];
-    uint32_t leftSumm = 0, rightSumm = 0;
-    uint32_t exp = 0, summ = 0;
-    for (size_t i = 0; i < MAX_POWER; i++)
+    uint32_t summ = 0;
+    uint32_t leftWeigth = 0, rightWeigth = 0;
+    for (size_t i = 0; i < MAX_POWER; i++) // заполнение структуры набора гирь
     {
         set[i].summBefore = summ;
-        set[i].used = 0;
+
         set[i].weigth = power(BASE, i);
         summ += set[i].weigth;
     }
+    leftWeigth = weight;
     for (int i = MAX_POWER - 1; i >= 0; i--)
     {
-        if (weight >= set[i].weigth)
+        weight = leftWeigth - rightWeigth;
+        if ((leftWeigth >= MAX_POSSIBLE_WEIGHT) || (rightWeigth >= MAX_POSSIBLE_WEIGHT))
         {
-            count++;
-            set[i].used = 1;
-            weight -= set[i].weigth;
+            printf("%d\n", -1);
+            return 0;
         }
-    }
-    if (weight == 0)
-    {
-        printf("%d\n", count);
-        return 0;
-    }
-    else
-    {
-        for (size_t i = MAX_POWER - 1; i >= 0; i--)
+        if (leftWeigth > rightWeigth)
         {
-            if ((set[i].used == 0) && weight >= set[i].weigth)
+            if ((set[i].weigth >= weight && set[i].summBefore < weight) || (weight >= set[i].weigth))
             {
                 count++;
-                set[i].used = 1;
-                weight -= set[i].weigth;
+                rightWeigth += set[i].weigth;
             }
         }
-        weight ? printf("%d\n", -1) : printf("%d\n", count);
+        else if (leftWeigth < rightWeigth)
+        {
+            if ((set[i].weigth >= -weight && set[i].summBefore < -weight) || (-weight >= set[i].weigth))
+            {
+                count++;
+                leftWeigth += set[i].weigth;
+            }
+        }
+        if (leftWeigth == rightWeigth)
+        {
+            printf("%d\n", count);
+            return 0;
+        }
     }
+    printf("%d\n", -1);
     return 0;
 }
