@@ -23,32 +23,55 @@ typedef struct list
     struct list *next;
 } list;
 
+void addItem(list *head, uint64_t address, size_t size)
+{
+    list *tmp = malloc(sizeof(list));
+    tmp->next = head;
+    tmp->address = address;
+    tmp->size = size;
+    head = tmp;
+}
+
 uint64_t findMaxBlock(list *head)
 {
-    list *p;
+    list *pTmp;
     size_t max = 0;
     uint64_t pAddr = 0;
-    for (p = head; p; p = p->next)
+    for (pTmp = head; pTmp; pTmp = pTmp->next)
     {
-        if (p->size > max)
-            max = p->size;
-        pAddr = p->address;
+        if (pTmp->size > max)
+        {
+            max = pTmp->size;
+            pAddr = pTmp->address;
+        }
     }
     return pAddr;
+};
+
+void printList(list head[])
+{
+    list *tmp;
+    for (tmp = head; tmp; tmp = tmp->next)
+    {
+        printf("%lu %lu \n", tmp->address, tmp->size);
+    }
 };
 
 int main(int argc, char *argv[])
 {
     int arrSize = 0;
-    scanf("%d", arrSize);
-    list *arr;
-    arr = malloc(sizeof(list)*arrSize);
-    arr->next=NULL;
+    scanf("%d", &arrSize);
+    list pList[arrSize];
     for (size_t i = 0; i < arrSize; i++)
     {
-        /* code */
+        scanf("%lu %lu", &pList[i].address, &pList[i].size);
+        pList[i].next = NULL;
+        if (i > 0)
+        {
+            pList[i - 1].next = &pList[i];
+        }
     }
-    
-
+    printList(pList);
+    printf("%lu\n", findMaxBlock(pList));
     return 0;
 }
