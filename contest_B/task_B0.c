@@ -23,15 +23,6 @@ typedef struct list
     struct list *next;
 } list;
 
-void addItem(list *head, uint64_t address, size_t size)
-{
-    list *tmp = malloc(sizeof(list));
-    tmp->next = head;
-    tmp->address = address;
-    tmp->size = size;
-    head = tmp;
-}
-
 uint64_t findMaxBlock(list *head)
 {
     list *pTmp;
@@ -71,7 +62,7 @@ int main(int argc, char *argv[])
             pList[i - 1].next = &pList[i];
         }
     }
-    printList(pList);
+    // printList(pList);
     printf("%lu\n", findMaxBlock(pList));
     return 0;
 }
