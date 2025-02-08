@@ -39,30 +39,30 @@ uint64_t findMaxBlock(list *head)
     return pAddr;
 };
 
-void printList(list head[])
-{
-    list *tmp;
-    for (tmp = head; tmp; tmp = tmp->next)
-    {
-        printf("%lu %lu \n", tmp->address, tmp->size);
-    }
-};
+// void printList(list head[])
+// {
+//     list *tmp;
+//     for (tmp = head; tmp; tmp = tmp->next)
+//     {
+//         printf("%lu %lu \n", tmp->address, tmp->size);
+//     }
+// };
 
-int main(int argc, char *argv[])
-{
-    int arrSize = 0;
-    scanf("%d", &arrSize);
-    list pList[arrSize];
-    for (size_t i = 0; i < arrSize; i++)
-    {
-        scanf("%lu %lu", &pList[i].address, &pList[i].size);
-        pList[i].next = NULL;
-        if (i > 0)
-        {
-            pList[i - 1].next = &pList[i];
-        }
-    }
-    // printList(pList);
-    printf("%lu\n", findMaxBlock(pList));
-    return 0;
-}
+// int main(int argc, char *argv[])
+// {
+//     int arrSize = 0;
+//     scanf("%d", &arrSize);
+//     list pList[arrSize];
+//     for (size_t i = 0; i < arrSize; i++)
+//     {
+//         scanf("%lu %lu", &pList[i].address, &pList[i].size);
+//         pList[i].next = NULL;
+//         if (i > 0)
+//         {
+//             pList[i - 1].next = &pList[i];
+//         }
+//     }
+//     // printList(pList);
+//     printf("%lu\n", findMaxBlock(pList));
+//     return 0;
+// }
