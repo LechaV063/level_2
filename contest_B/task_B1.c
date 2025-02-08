@@ -22,4 +22,11 @@ struct list *next;
 } list;
 
 size_t totalMemoryUsage(list *head){
+    list *pTmp;
+    size_t summ = 0;
+    for (pTmp = head; pTmp; pTmp = pTmp->next)
+    {      
+            summ += pTmp->size;
+    }
+    return summ;
 }
