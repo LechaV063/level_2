@@ -73,23 +73,14 @@ _Bool isOperator(char c)
     return c == '+' || c == '-' || c == '*' || c == '/';
 }
 
-// main.c
-// #include "stack.h"
-
 int main(void)
 {
     char c;
-    // printf("Input inverse string: ");
-
     char str[1000];
-    int len = 0; // 1 2 + 4 * 3 + // 3 5 + 10 * 17 2 * -
-                 // answer = 15    // answer = 46
-    //~ scanf("%[^\n]",str);
-    //~ len=strlen(str);
+    int len = 0; 
     while ((c = getchar()) != '\n')
         str[len++] = c;
     str[len] = 0;
-    //~ printf("str=%slen=%d\n",str,len);
     for (int i = 0; i < len; i++)
     {
         if (isDigit(str[i]))
@@ -97,7 +88,6 @@ int main(void)
             datatype number; // strtof( const char * string, char ** endptr, int basis );
             for (number = 0; isDigit(str[i]); i++)
                 number = number * 10 + str[i] - '0';
-            //~ printf("%d \n",number);
             push(number);
         }
         else
